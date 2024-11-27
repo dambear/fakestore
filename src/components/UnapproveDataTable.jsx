@@ -1,8 +1,6 @@
 import PropTypes from "prop-types";
 
-import { useNavigate } from 'react-router-dom';
-
-export default function DataTable(props) {
+export default function UnapproveDataTable(props) {
     // Helper function to handle boolean values
     const renderValue = (value) => {
         if (typeof value === "boolean") {
@@ -11,30 +9,6 @@ export default function DataTable(props) {
         return value;
     };
 
-    const navigate = useNavigate();
-
-    const handleApprove = async (id) => {
-        try {
-
-            const response = await fetch(`http://localhost:8000/loans/approve/${id}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ id }),
-            });
-
-            if (response.ok) {
-                alert("Loan approved successfully!");
-                navigate(0);
-            } else {
-                alert("Failed to approve loan.");
-            }
-        } catch (error) {
-            console.error("Error approving loan:", error);
-            alert("Error while approving loan.");
-        }
-    };
 
     return (
         <div className="flex gap-4 ">
@@ -52,20 +26,13 @@ export default function DataTable(props) {
                         </div>
                     ))}
 
-
-
-                    <button onClick={() => handleApprove(row.id)}
-                          className="w-full justify-center bg-blue-300 p-2"
-                    >
-                        Approve
-                    </button>
                 </div>
             ))}
         </div>
     );
 }
 
-DataTable.propTypes = {
+UnapproveDataTable.propTypes = {
     columns: PropTypes.arrayOf(PropTypes.string).isRequired,
     data: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
